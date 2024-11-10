@@ -1,0 +1,32 @@
+CREATE TABLE Clientes (
+    cliente_id INT auto_increment PRIMARY KEY,
+    dni VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    direccion VARCHAR(100)
+);
+
+CREATE TABLE Proveedores (
+    proveedor_id auto_increment INT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    cuit VARCHAR(20) UNIQUE NOT NULL,
+    direccion VARCHAR(100)
+);
+
+CREATE TABLE Productos (
+    producto_id INT auto_increment PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    proveedor_id INT NOT NULL,
+    FOREIGN KEY (proveedor_id) REFERENCES Proveedores(proveedor_id)
+);
+
+CREATE TABLE Ventas (
+    venta_id INT auto_increment PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    fecha DATE NOT NULL,
+    monto_total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(cliente_id),
+    FOREIGN KEY (producto_id) REFERENCES Productos(producto_id)
+);
