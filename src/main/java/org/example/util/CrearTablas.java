@@ -27,6 +27,11 @@ public class CrearTablas {
             pstmtProductos.executeUpdate();
             pstmtVentas.executeUpdate();
 
+            pstmtCliente.close();
+            pstmtProveedores.close();
+            pstmtProductos.close();
+            pstmtVentas.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
