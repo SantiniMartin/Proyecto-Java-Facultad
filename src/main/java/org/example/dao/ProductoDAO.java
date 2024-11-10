@@ -128,5 +128,4 @@ public class ProductoDAO {
             System.out.println("Ocurrió un error en la base de datos " + e.getMessage());
         }
     }
-
 }
