@@ -5,6 +5,7 @@ import org.example.models.Producto;
 import org.example.models.Proveedor;
 import org.example.models.Venta;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -206,8 +207,13 @@ public class MenuPrincipal {
                     Producto producto = new Producto();
                     System.out.println("Ingrese el nombre del producto: ");
                     producto.setNombre(scanner.nextLine());
+                    System.out.println("Ingrese una descipción del producto: ");
+                    producto.setDescripcion(scanner.nextLine());
                     System.out.println("Ingrese el precio del producto: ");
                     producto.setPrecio(scanner.nextDouble());
+                    scanner.nextLine();
+                    System.out.println("Ingrese el stock del producto: ");
+                    producto.setStock(scanner.nextInt());
                     scanner.nextLine();
                     System.out.println("Ingrese el ID del proveedor: ");
                     int proveedor_id = scanner.nextInt();
@@ -231,6 +237,9 @@ public class MenuPrincipal {
                     actualizarProducto.setNombre(scanner.nextLine());
                     System.out.println("Ingrese el precio del producto: ");
                     actualizarProducto.setPrecio(scanner.nextDouble());
+                    System.out.println("Ingrese el stock del producto: ");
+                    actualizarProducto.setStock(scanner.nextInt());
+                    scanner.nextLine();
                     System.out.println("Ingrese el ID del proveedor: ");
                     int proveedorID = scanner.nextInt();
                     productoDAO.actualizarProducto(productoID, actualizarProducto, proveedorID);
@@ -254,6 +263,7 @@ public class MenuPrincipal {
         Scanner scanner = new Scanner(System.in);
         int ventaID;
         int option;
+
         do {
             System.out.println("\n--- Menú Ventas ---");
             System.out.println("1. Agregar Venta");
@@ -275,18 +285,11 @@ public class MenuPrincipal {
                     System.out.println("Ingrese el ID del producto: ");
                     int productoID = scanner.nextInt();
                     scanner.nextLine();
-//                    System.out.println("Ingrese la fecha de la venta: ");
-//                    System.out.println("Ingrese el año: ");
-//                    int anio = scanner.nextInt();
-//                    scanner.nextLine();
-//                    System.out.println("Ingrese el mes: ");
-//                    int mes = scanner.nextInt();
-//                    scanner.nextLine();
-//                    System.out.println("Ingrese el día: ");
-//                    int dia = scanner.nextInt();
-//                    nuevaVenta.setFechaDeVenta(LocalDate.of(anio, mes, dia));
                     System.out.println("Ingrese el monto: ");
                     nuevaVenta.setMontoTotal(scanner.nextDouble());
+                    scanner.nextLine();
+                    System.out.println("Ingrese la cantidad: ");
+                    nuevaVenta.setCantidadProducto(scanner.nextInt());
                     scanner.nextLine();
                     ventaDAO.agregarVenta(clienteID, productoID, nuevaVenta);
                     break;
@@ -296,6 +299,7 @@ public class MenuPrincipal {
                 case 3:
                     System.out.println("Ingrese el ID de la venta a buscar: ");
                     ventaID = scanner.nextInt();
+                    scanner.nextLine();
                     ventaDAO.buscarVentaPorId(ventaID);
                     break;
                 case 4:
@@ -312,21 +316,26 @@ public class MenuPrincipal {
                     System.out.println("Ingrese el monto total de la venta: ");
                     modificarVenta.setMontoTotal(scanner.nextDouble());
                     scanner.nextLine();
-                    System.out.println("Ingrese la fecha de la venta");
-                    System.out.println("Ingrese el año: ");
-                    int anioMod = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.println("Ingrese el mes: ");
-                    int mesMod = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.println("Ingrese el día: ");
-                    int diaMod = scanner.nextInt();
-                    modificarVenta.setFechaDeVenta(LocalDate.of(anioMod, mesMod, diaMod));
+                    System.out.println("Ingrese la cantidad de productos: ");
+                    modificarVenta.setCantidadProducto(scanner.nextInt());
+                    LocalDate fechaActual = LocalDate.now();
+                    modificarVenta.setFechaDeVenta(fechaActual);
+//                    System.out.println("Ingrese la fecha de la venta");
+//                    System.out.println("Ingrese el año: ");
+//                    int anioMod = scanner.nextInt();
+//                    scanner.nextLine();
+//                    System.out.println("Ingrese el mes: ");
+//                    int mesMod = scanner.nextInt();
+//                    scanner.nextLine();
+//                    System.out.println("Ingrese el día: ");
+//                    int diaMod = scanner.nextInt();
+//                    modificarVenta.setFechaDeVenta(LocalDate.of(anioMod, mesMod, diaMod));
                     ventaDAO.actualizarVenta(ventaID, idCliente, idProducto, modificarVenta);
                     break;
                 case 5:
                     System.out.println("Ingrese el ID de la venta a eliminar: ");
                     ventaID = scanner.nextInt();
+                    scanner.nextLine();
                     ventaDAO.eliminarVenta(ventaID);
                     break;
                 case 6:
@@ -337,6 +346,5 @@ public class MenuPrincipal {
                     break;
             }
         } while (option != 6);
-        scanner.close();
     }
 }

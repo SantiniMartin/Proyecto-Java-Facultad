@@ -11,14 +11,16 @@ import java.sql.SQLException;
 public class ProductoDAO {
 
     public void agregarProducto(int id, Producto producto){
-        String sql = "INSERT INTO productos (nombre, precio, proveedor_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO productos (nombre, descripcion, precio, stock, proveedor_id) VALUES (?, ?, ?, ?, ?)";
         try{
             Connection conn = ConexionDB.conectar();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, producto.getNombre());
-            pstmt.setString(2, String.valueOf(producto.getPrecio()));
-            pstmt.setString(3, String.valueOf(id));
+            pstmt.setString(2, producto.getDescripcion());
+            pstmt.setString(3, String.valueOf(producto.getPrecio()));
+            pstmt.setString(4, String.valueOf(producto.getStock()));
+            pstmt.setString(5, String.valueOf(id));
 
             if (pstmt.executeUpdate() > 0){
                 System.out.println("Producto creado con éxito");
@@ -45,9 +47,11 @@ public class ProductoDAO {
             if (rs.next()){
                 int producto_id = rs.getInt("producto_id");
                 String nombre = rs.getString("nombre");
+                String descipcion = rs.getString("descripcion");
                 double precio = rs.getDouble("precio");
+                String stock = rs.getString("stock");
                 int proveedor_id = rs.getInt("proveedor_id");
-                System.out.println("Producto ID: " + producto_id + ", nombre: " + nombre + ", precio: " + precio + ", proveedor_id: " + proveedor_id);
+                System.out.println("Producto ID: " + producto_id + ", nombre: " + nombre + ", descipción: " + descipcion + ", precio: " + precio + ", stock: " + stock + ", proveedor_id: " + proveedor_id);
             } else{
                 System.out.println("Cliente no encontrado");
             }
@@ -62,15 +66,16 @@ public class ProductoDAO {
     }
 
     public void actualizarProducto(int id, Producto producto, int proveedorID){
-        String sql = "UPDATE Productos SET nombre = ?, precio = ?, proveedor_id = ? WHERE producto_id = ?";
+        String sql = "UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, proveedor_id = ? WHERE producto_id = ?";
         try{
             Connection conn = ConexionDB.conectar();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, producto.getNombre());
-            pstmt.setString(2, String.valueOf(producto.getPrecio()));
-            pstmt.setInt(3, proveedorID);
-            pstmt.setInt(4, id);
+            pstmt.setString(2, producto.getDescripcion());
+            pstmt.setString(3, String.valueOf(producto.getPrecio()));
+            pstmt.setInt(4, proveedorID);
+            pstmt.setInt(5, id);
 
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
@@ -96,9 +101,11 @@ public class ProductoDAO {
             while (rs.next()){
                 int producto_id = rs.getInt("producto_id");
                 String nombre = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
                 String precio = rs.getString("precio");
+                String stock = rs.getString("stock");
                 String proveedorID = rs.getString("proveedor_id");
-                System.out.println("Producto ID: " + producto_id + ", nombre: " + nombre + ", precio: " + precio + ", proveedor: " + proveedorID);
+                System.out.println("Producto ID: " + producto_id + ", nombre: " + nombre + ", descipción: " + descripcion + ", precio: " + precio + ", stock: " + stock + ", proveedor: " + proveedorID);
             }
             //Cerramos las instancias de la BD
             conn.close();

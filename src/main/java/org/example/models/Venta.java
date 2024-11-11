@@ -6,6 +6,7 @@ public class Venta {
 
     private LocalDate fechaDeVenta;
     private double montoTotal;
+    private int cantidadProducto;
 
     public Venta(){
     }
@@ -16,6 +17,14 @@ public class Venta {
 
     public void setMontoTotal(double montoTotal) {
         this.montoTotal = montoTotal;
+    }
+
+    public int getCantidadProducto() {
+        return cantidadProducto;
+    }
+
+    public void setCantidadProducto(int cantidadProducto) {
+        this.cantidadProducto = cantidadProducto;
     }
 
     public LocalDate getFechaDeVenta() {

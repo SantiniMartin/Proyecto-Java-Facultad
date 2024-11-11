@@ -45,7 +45,7 @@ public class VentaDAO {
             if (!productoExiste(idProducto)) {
                 throw new RegistroNoEncontradoException("No existe el producto, agregue antes de realizar la venta.");
             }
-            String sql = "INSERT INTO ventas (fecha, monto_total, cliente_id, producto_id) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO ventas (fecha, monto_total, cantidad, cliente_id, producto_id) VALUES (?, ?, ?, ?, ?)";
             try{
                 Connection conn = ConexionDB.conectar();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -53,8 +53,9 @@ public class VentaDAO {
 
                 pstmt.setString(1, String.valueOf(ventaActual));
                 pstmt.setString(2, String.valueOf(venta.getMontoTotal()));
-                pstmt.setString(3, String.valueOf(idCliente));
-                pstmt.setString(4, String.valueOf(idProducto));
+                pstmt.setString(3, String.valueOf(venta.getCantidadProducto()));
+                pstmt.setString(4, String.valueOf(idCliente));
+                pstmt.setString(5, String.valueOf(idProducto));
 
                 if (pstmt.executeUpdate() > 0){
                     System.out.println("Venta creada con éxito");
@@ -73,16 +74,17 @@ public class VentaDAO {
     }
 
     public void actualizarVenta(int idVenta, int idCliente, int idProducto, Venta venta){
-        String sql = "UPDATE Ventas SET fecha = ?, monto_total = ?, producto_id = ?, cliente_id = ? WHERE venta_id = ?";
+        String sql = "UPDATE Ventas SET fecha = ?, monto_total = ?, cantidad = ?, producto_id = ?, cliente_id = ? WHERE venta_id = ?";
         try{
             Connection conn = ConexionDB.conectar();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, String.valueOf(venta.getFechaDeVenta()));
             pstmt.setString(2, String.valueOf(venta.getMontoTotal()));
-            pstmt.setString(3, String.valueOf(idProducto));
-            pstmt.setString(4, String.valueOf(idCliente));
-            pstmt.setString(5, String.valueOf(idVenta));
+            pstmt.setString(3, String.valueOf(venta.getCantidadProducto()));
+            pstmt.setString(4, String.valueOf(idProducto));
+            pstmt.setString(5, String.valueOf(idCliente));
+            pstmt.setString(6, String.valueOf(idVenta));
 
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
@@ -110,11 +112,12 @@ public class VentaDAO {
             if (rs.next()){
                 int venta_id = rs.getInt("venta_id");
                 double monto_total = rs.getDouble("monto_total");
+                String cantidad = rs.getString("cantidad");
                 String fecha = rs.getString("fecha");
                 String producto_id = rs.getString("producto_id");
                 String cliente_id = rs.getString("cliente_id");
 
-                System.out.println("Venta ID: " + venta_id + ", monto total: " + monto_total + ", fecha: " + fecha + ", cliente ID: " + cliente_id + ", producto ID: " + producto_id);
+                System.out.println("Venta ID: " + venta_id + ", monto total: " + monto_total + ", cantidad: " + cantidad + ", fecha: " + fecha + ", cliente ID: " + cliente_id + ", producto ID: " + producto_id);
             }
             //Cerramos las instancias de la BD
             conn.close();
@@ -135,10 +138,11 @@ public class VentaDAO {
             while(rs.next()){
                 int venta_id = rs.getInt("venta_id");
                 double monto_total = rs.getDouble("monto_total");
+                String cantidad = rs.getString("cantidad");
                 String fecha = rs.getString("fecha");
                 String cliente_id = rs.getString("cliente_id");
                 String producto_id = rs.getString("producto_id");
-                System.out.println("Venta ID: " + venta_id + ", monto total: " + monto_total + ", fecha: " + fecha + ", cliente ID: " + cliente_id + ", producto ID: " + producto_id);
+                System.out.println("Venta ID: " + venta_id + ", monto total: " + monto_total + ", cantidad: " + cantidad + ", fecha: " + fecha + ", cliente ID: " + cliente_id + ", producto ID: " + producto_id);
             }
             conn.close();
             pstmt.close();
