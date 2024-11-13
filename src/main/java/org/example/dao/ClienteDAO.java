@@ -8,6 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * La clase ClienteDAO proporciona métodos para realizar operaciones CRUD en la base de datos
+ * sobre objetos de tipo Cliente, como agregar, buscar, actualizar, listar y eliminar clientes.
+ */
 public class ClienteDAO {
 
     public void agregarCliente(Cliente cliente){

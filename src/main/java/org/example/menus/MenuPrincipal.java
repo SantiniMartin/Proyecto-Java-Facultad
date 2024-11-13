@@ -5,7 +5,6 @@ import org.example.models.Producto;
 import org.example.models.Proveedor;
 import org.example.models.Venta;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -320,16 +319,6 @@ public class MenuPrincipal {
                     modificarVenta.setCantidadProducto(scanner.nextInt());
                     LocalDate fechaActual = LocalDate.now();
                     modificarVenta.setFechaDeVenta(fechaActual);
-//                    System.out.println("Ingrese la fecha de la venta");
-//                    System.out.println("Ingrese el año: ");
-//                    int anioMod = scanner.nextInt();
-//                    scanner.nextLine();
-//                    System.out.println("Ingrese el mes: ");
-//                    int mesMod = scanner.nextInt();
-//                    scanner.nextLine();
-//                    System.out.println("Ingrese el día: ");
-//                    int diaMod = scanner.nextInt();
-//                    modificarVenta.setFechaDeVenta(LocalDate.of(anioMod, mesMod, diaMod));
                     ventaDAO.actualizarVenta(ventaID, idCliente, idProducto, modificarVenta);
                     break;
                 case 5:
