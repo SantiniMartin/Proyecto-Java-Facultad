@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
 
+    //Metodo principal por el cual se muestran los 'menus'
     public static void mostrarMenuPrincipal(){
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -27,15 +28,19 @@ public class MenuPrincipal {
 
             switch (opcion) {
                 case 1:
+                    //Invoca al metodo clienteMenu
                     clienteMenu();
                     break;
                 case 2:
+                    //Invoca al metodo proveedorMenu
                     proveedorMenu();
                     break;
                 case 3:
+                    //Invoca al metodo productoMenu
                     productoMenu();
                     break;
                 case 4:
+                    //Invoca al metodo ventaMenu
                     ventaMenu();
                     break;
                 case 5:
@@ -234,6 +239,8 @@ public class MenuPrincipal {
                     scanner.nextLine();
                     System.out.println("Ingrese el nombre del producto: ");
                     actualizarProducto.setNombre(scanner.nextLine());
+                    System.out.println("Ingrese la descripción del producto: ");
+                    actualizarProducto.setDescripcion(scanner.nextLine());
                     System.out.println("Ingrese el precio del producto: ");
                     actualizarProducto.setPrecio(scanner.nextDouble());
                     System.out.println("Ingrese el stock del producto: ");
